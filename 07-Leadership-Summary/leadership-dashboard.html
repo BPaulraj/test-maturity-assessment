@@ -1,0 +1,606 @@
+<title>Test Maturity Briefing</title>
+<meta name="description" content="Leadership briefing on the org-wide test maturity model, grading bands, 360-degree coverage, and phased rollout roadmap.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@500;600;700;800&family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    color-scheme: light;
+    --page:#f7f7f3;
+    --surface:#ffffff;
+    --surface-2:#f0efe8;
+    --surface-3:#e7e5da;
+    --border:rgba(15,15,10,0.11);
+    --border-strong:rgba(15,15,10,0.18);
+    --text-primary:#15150f;
+    --text-secondary:#55534c;
+    --text-muted:#8b8880;
+
+    --accent:#1c5cab;
+    --accent-strong:#104281;
+    --accent-soft:#dce9fa;
+
+    --grade-a:#0ca30c;   --grade-a-soft:#e2f5e2;
+    --grade-b:#2a78d6;   --grade-b-soft:#e2edfb;
+    --grade-c:#c96a3f;   --grade-c-soft:#f7e6dc;
+    --grade-d:#c23434;   --grade-d-soft:#f8e0e0;
+
+    --series-process:#2a78d6;
+    --series-coverage:#c9591f;
+    --series-automation:#158f63;
+    --series-ai:#c98500;
+    --series-competency:#c65a86;
+
+    --level-1:#86b6ef; --level-2:#5598e7; --level-3:#2a78d6; --level-4:#1c5cab; --level-5:#104281;
+
+    --shadow-sm: 0 1px 2px rgba(20,20,10,0.05);
+    --shadow-md: 0 6px 20px -8px rgba(20,20,10,0.18);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      color-scheme: dark;
+      --page:#0c0c0b;
+      --surface:#171714;
+      --surface-2:#1e1e1a;
+      --surface-3:#28281f;
+      --border:rgba(255,255,255,0.10);
+      --border-strong:rgba(255,255,255,0.18);
+      --text-primary:#f7f6f2;
+      --text-secondary:#c3c2b7;
+      --text-muted:#8b8880;
+
+      --accent:#5c9bea;
+      --accent-strong:#9ec5f4;
+      --accent-soft:#1c3450;
+
+      --grade-a:#1abf3a;  --grade-a-soft:#123018;
+      --grade-b:#5c9bea;  --grade-b-soft:#152a45;
+      --grade-c:#e2926a;  --grade-c-soft:#3a2519;
+      --grade-d:#e56a6a;  --grade-d-soft:#3a1c1c;
+
+      --series-process:#3987e5;
+      --series-coverage:#d97b3f;
+      --series-automation:#199e70;
+      --series-ai:#c98500;
+      --series-competency:#d55181;
+
+      --level-1:#0d366b; --level-2:#184f95; --level-3:#3987e5; --level-4:#6da7ec; --level-5:#9ec5f4;
+
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.4);
+      --shadow-md: 0 10px 28px -10px rgba(0,0,0,0.55);
+    }
+  }
+  :root[data-theme="dark"]{
+    color-scheme: dark;
+    --page:#0c0c0b;
+    --surface:#171714;
+    --surface-2:#1e1e1a;
+    --surface-3:#28281f;
+    --border:rgba(255,255,255,0.10);
+    --border-strong:rgba(255,255,255,0.18);
+    --text-primary:#f7f6f2;
+    --text-secondary:#c3c2b7;
+    --text-muted:#8b8880;
+
+    --accent:#5c9bea;
+    --accent-strong:#9ec5f4;
+    --accent-soft:#1c3450;
+
+    --grade-a:#1abf3a;  --grade-a-soft:#123018;
+    --grade-b:#5c9bea;  --grade-b-soft:#152a45;
+    --grade-c:#e2926a;  --grade-c-soft:#3a2519;
+    --grade-d:#e56a6a;  --grade-d-soft:#3a1c1c;
+
+    --series-process:#3987e5;
+    --series-coverage:#d97b3f;
+    --series-automation:#199e70;
+    --series-ai:#c98500;
+    --series-competency:#d55181;
+
+    --level-1:#0d366b; --level-2:#184f95; --level-3:#3987e5; --level-4:#6da7ec; --level-5:#9ec5f4;
+
+    --shadow-sm: 0 1px 2px rgba(0,0,0,0.4);
+    --shadow-md: 0 10px 28px -10px rgba(0,0,0,0.55);
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--page);
+    color:var(--text-primary);
+    font-family:"Public Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,h4{
+    font-family:"Libre Franklin", "Public Sans", sans-serif;
+    font-weight:700;
+    letter-spacing:-0.01em;
+    text-wrap:balance;
+    margin:0;
+    color:var(--text-primary);
+  }
+  .mono{ font-family:"IBM Plex Mono", ui-monospace, monospace; font-variant-numeric:tabular-nums; }
+  p{ margin:0; line-height:1.6; color:var(--text-secondary); }
+  .wrap{ max-width:1080px; margin:0 auto; padding:0 28px; }
+  a{ color:var(--accent); }
+
+  /* ---------- top bar ---------- */
+  .topbar{
+    border-bottom:1px solid var(--border);
+    background:var(--surface);
+    position:sticky; top:0; z-index:20;
+    backdrop-filter: blur(6px);
+  }
+  .topbar-inner{
+    max-width:1080px; margin:0 auto; padding:14px 28px;
+    display:flex; align-items:center; justify-content:space-between; gap:16px;
+    flex-wrap:wrap;
+  }
+  .brand{ display:flex; align-items:center; gap:10px; }
+  .brand-mark{
+    width:30px; height:30px; border-radius:7px;
+    background:linear-gradient(155deg, var(--accent), var(--accent-strong));
+    display:flex; align-items:center; justify-content:center;
+    color:#fff; font-family:"IBM Plex Mono"; font-weight:700; font-size:13px;
+    flex:none;
+  }
+  .brand-name{ font-family:"Libre Franklin"; font-weight:700; font-size:14.5px; }
+  .brand-sub{ font-size:11px; color:var(--text-muted); letter-spacing:0.04em; text-transform:uppercase; }
+  nav.quicklinks{ display:flex; gap:18px; flex-wrap:wrap; }
+  nav.quicklinks a{
+    font-size:12.5px; font-weight:600; color:var(--text-secondary);
+    text-decoration:none; letter-spacing:0.01em;
+  }
+  nav.quicklinks a:hover{ color:var(--accent); }
+
+  /* ---------- hero / summary ---------- */
+  .hero{ padding:44px 0 8px; }
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:8px;
+    font-size:11.5px; font-weight:700; letter-spacing:0.09em; text-transform:uppercase;
+    color:var(--accent-strong);
+    background:var(--accent-soft); border-radius:999px; padding:5px 12px 5px 10px;
+    margin-bottom:16px;
+  }
+  .eyebrow .dot{ width:6px; height:6px; border-radius:50%; background:var(--accent); }
+  h1.title{ font-size:clamp(28px,4vw,40px); line-height:1.08; max-width:16ch; }
+  .lede{ font-size:16.5px; max-width:62ch; margin-top:14px; }
+  .status-row{ display:flex; gap:10px; flex-wrap:wrap; margin-top:20px; }
+  .status-pill{
+    display:inline-flex; align-items:center; gap:7px;
+    font-size:12.5px; font-weight:600; color:var(--text-secondary);
+    background:var(--surface-2); border:1px solid var(--border); border-radius:999px;
+    padding:6px 12px;
+  }
+  .status-pill b{ color:var(--text-primary); font-family:"IBM Plex Mono"; font-weight:600; }
+
+  /* ---------- stat tiles ---------- */
+  .stats{
+    display:grid; grid-template-columns:repeat(4,1fr); gap:1px;
+    background:var(--border); border:1px solid var(--border); border-radius:12px;
+    overflow:hidden; margin-top:28px;
+  }
+  .stat{ background:var(--surface); padding:18px 18px 16px; }
+  .stat .n{ font-family:"IBM Plex Mono"; font-weight:700; font-size:26px; color:var(--accent-strong); }
+  .stat .l{ font-size:12.5px; color:var(--text-secondary); margin-top:4px; }
+
+  /* ---------- sections ---------- */
+  section{ padding:56px 0; border-top:1px solid var(--border); }
+  section:first-of-type{ border-top:none; }
+  .section-head{ display:flex; justify-content:space-between; align-items:flex-end; gap:20px; margin-bottom:26px; flex-wrap:wrap; }
+  .kicker{ font-size:11.5px; font-weight:700; letter-spacing:0.09em; text-transform:uppercase; color:var(--text-muted); margin-bottom:8px; display:block; }
+  h2.h{ font-size:24px; max-width:36ch; }
+  .section-desc{ max-width:60ch; font-size:14.5px; margin-top:6px; }
+  .colcap{ font-size:13px; max-width:34ch; text-align:right; color:var(--text-muted); }
+
+  /* ---------- maturity ladder ---------- */
+  .ladder{ display:flex; gap:3px; border-radius:10px; overflow:hidden; box-shadow:var(--shadow-sm); }
+  .rung{ flex:1; padding:16px 14px 14px; color:#fff; min-height:96px; display:flex; flex-direction:column; justify-content:space-between; }
+  .rung .lv{ font-family:"IBM Plex Mono"; font-weight:700; font-size:13px; opacity:0.92; }
+  .rung .name{ font-family:"Libre Franklin"; font-weight:700; font-size:14.5px; margin-top:26px; text-wrap:balance; }
+  .ladder-detail{ display:grid; grid-template-columns:repeat(5,1fr); gap:16px; margin-top:18px; }
+  .ladder-detail .cell{ font-size:12.8px; color:var(--text-secondary); line-height:1.5; padding-right:6px; }
+
+  /* ---------- grade cards ---------- */
+  .grades{ display:grid; grid-template-columns:repeat(4,1fr); gap:14px; }
+  .grade-card{
+    border:1px solid var(--border); border-radius:12px; background:var(--surface);
+    padding:18px; display:flex; flex-direction:column; gap:10px; box-shadow:var(--shadow-sm);
+  }
+  .grade-top{ display:flex; align-items:center; gap:10px; }
+  .grade-chip{
+    width:38px; height:38px; border-radius:9px; flex:none;
+    display:flex; align-items:center; justify-content:center;
+    font-family:"IBM Plex Mono"; font-weight:700; font-size:17px; color:#fff;
+  }
+  .grade-card h4{ font-size:15px; }
+  .grade-card .tag{ font-size:11px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; }
+  .grade-card p{ font-size:13px; }
+  .grade-card .posture{
+    font-size:12px; color:var(--text-primary); background:var(--surface-2);
+    border-radius:8px; padding:8px 10px; margin-top:auto;
+  }
+
+  /* ---------- dimension weighting ---------- */
+  .weightbar{ display:flex; height:34px; border-radius:8px; overflow:hidden; border:1px solid var(--border); }
+  .weightbar .seg{ display:flex; align-items:center; justify-content:center; color:#fff; font-family:"IBM Plex Mono"; font-size:12px; font-weight:700; }
+  .legend{ display:grid; grid-template-columns:repeat(5,1fr); gap:14px; margin-top:16px; }
+  .legend-item{ display:flex; gap:9px; align-items:flex-start; }
+  .swatch{ width:11px; height:11px; border-radius:3px; margin-top:3px; flex:none; }
+  .legend-item .t{ font-size:12.8px; font-weight:600; color:var(--text-primary); }
+  .legend-item .d{ font-size:12px; color:var(--text-muted); margin-top:2px; }
+
+  .gate-note{
+    margin-top:22px; border:1px solid var(--border-strong); border-left:3px solid var(--grade-d);
+    background:var(--grade-d-soft); border-radius:0 10px 10px 0; padding:14px 16px;
+    display:flex; gap:12px; align-items:flex-start;
+  }
+  .gate-note svg{ flex:none; margin-top:2px; }
+  .gate-note .t{ font-weight:700; font-size:13.5px; color:var(--text-primary); }
+  .gate-note .d{ font-size:13px; color:var(--text-secondary); margin-top:3px; }
+
+  /* ---------- 360 grid ---------- */
+  .grid360{ display:grid; grid-template-columns:repeat(4,1fr); gap:14px; }
+  .quad{ border:1px solid var(--border); border-radius:12px; background:var(--surface); padding:16px; }
+  .quad h4{ font-size:13px; color:var(--accent-strong); margin-bottom:12px; }
+  .quad ul{ margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:8px; }
+  .quad li{ font-size:12.8px; color:var(--text-secondary); padding-left:16px; position:relative; }
+  .quad li::before{ content:"›"; position:absolute; left:0; color:var(--accent); font-weight:700; }
+
+  /* ---------- illustrative snapshot ---------- */
+  .sample-badge{
+    display:inline-flex; align-items:center; gap:7px; font-size:11px; font-weight:700;
+    letter-spacing:0.05em; text-transform:uppercase; color:var(--grade-c);
+    background:var(--grade-c-soft); border-radius:999px; padding:5px 11px; margin-bottom:16px;
+  }
+  .snapshot{ display:grid; grid-template-columns:1.1fr 1fr; gap:32px; align-items:center; }
+  .distbar{ display:flex; flex-direction:column; gap:10px; }
+  .distrow{ display:grid; grid-template-columns:70px 1fr 40px; gap:12px; align-items:center; }
+  .distrow .lbl{ font-size:12.5px; font-weight:700; color:var(--text-primary); }
+  .distrow .track{ height:16px; background:var(--surface-2); border-radius:5px; overflow:hidden; }
+  .distrow .fill{ height:100%; border-radius:5px 0 0 5px; }
+  .distrow .val{ font-family:"IBM Plex Mono"; font-size:12.5px; text-align:right; color:var(--text-secondary); }
+  .snapshot-note{ font-size:13px; color:var(--text-muted); }
+  .donutwrap{ display:flex; align-items:center; gap:22px; justify-content:center; }
+  .donut-legend{ display:flex; flex-direction:column; gap:9px; }
+  .donut-legend .li{ display:flex; align-items:center; gap:8px; font-size:12.5px; color:var(--text-secondary); }
+  .donut-legend b{ color:var(--text-primary); font-family:"IBM Plex Mono"; }
+
+  /* ---------- roadmap ---------- */
+  .roadmap{ display:grid; grid-template-columns:repeat(4,1fr); gap:0; position:relative; }
+  .phase{ padding:0 16px 0 0; position:relative; }
+  .phase:not(:last-child)::after{
+    content:""; position:absolute; top:13px; right:-1px; width:100%; height:2px; background:var(--border-strong);
+  }
+  .phase-marker{
+    width:26px; height:26px; border-radius:50%; background:var(--surface); border:2px solid var(--accent);
+    color:var(--accent-strong); font-family:"IBM Plex Mono"; font-weight:700; font-size:12px;
+    display:flex; align-items:center; justify-content:center; position:relative; z-index:2; margin-bottom:14px;
+  }
+  .phase-when{ font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; color:var(--text-muted); }
+  .phase h4{ font-size:14.5px; margin:6px 0 8px; }
+  .phase p{ font-size:12.8px; }
+
+  /* ---------- asks ---------- */
+  .asks{ display:grid; grid-template-columns:repeat(2,1fr); gap:14px; }
+  .ask{ border:1px solid var(--border); background:var(--surface); border-radius:12px; padding:16px 18px; display:flex; gap:14px; }
+  .ask .num{ font-family:"IBM Plex Mono"; font-weight:700; color:var(--accent-strong); font-size:15px; flex:none; }
+  .ask h4{ font-size:14px; margin-bottom:4px; }
+  .ask p{ font-size:12.8px; }
+
+  /* ---------- footer / doc index ---------- */
+  footer{ border-top:1px solid var(--border); padding:40px 0 60px; }
+  .docindex{ display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-top:18px; }
+  .doc{ border:1px solid var(--border); border-radius:9px; padding:11px 13px; background:var(--surface); }
+  .doc .p{ font-family:"IBM Plex Mono"; font-size:10.5px; color:var(--accent-strong); font-weight:600; }
+  .doc .n{ font-size:12.5px; font-weight:600; margin-top:3px; color:var(--text-primary); }
+  .fineprint{ font-size:12px; color:var(--text-muted); margin-top:26px; max-width:70ch; }
+
+  @media (max-width: 880px){
+    nav.quicklinks{ display:none; }
+    .stats{ grid-template-columns:repeat(2,1fr); }
+    .grades{ grid-template-columns:repeat(2,1fr); }
+    .ladder{ flex-wrap:wrap; }
+    .rung{ min-width:120px; }
+    .ladder-detail{ grid-template-columns:repeat(2,1fr); }
+    .legend{ grid-template-columns:repeat(2,1fr); }
+    .grid360{ grid-template-columns:repeat(2,1fr); }
+    .snapshot{ grid-template-columns:1fr; }
+    .roadmap{ grid-template-columns:repeat(2,1fr); row-gap:28px; }
+    .phase:nth-child(2)::after{ display:none; }
+    .asks{ grid-template-columns:1fr; }
+    .docindex{ grid-template-columns:repeat(2,1fr); }
+  }
+  @media (max-width: 520px){
+    .stats{ grid-template-columns:1fr 1fr; }
+    .grades{ grid-template-columns:1fr; }
+    .roadmap{ grid-template-columns:1fr; }
+    .docindex{ grid-template-columns:1fr; }
+  }
+</style>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      <div class="brand-mark">QE</div>
+      <div>
+        <div class="brand-name">Test Maturity &amp; Quality Excellence Program</div>
+        <div class="brand-sub">Leadership Briefing</div>
+      </div>
+    </div>
+    <nav class="quicklinks">
+      <a href="#ladder">Maturity model</a>
+      <a href="#grades">Grading</a>
+      <a href="#weighting">How it's scored</a>
+      <a href="#coverage">360° coverage</a>
+      <a href="#snapshot">Portfolio view</a>
+      <a href="#roadmap">Roadmap</a>
+      <a href="#ask">The ask</a>
+    </nav>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="hero">
+    <span class="eyebrow"><span class="dot"></span>Program status: framework ready</span>
+    <h1 class="title">One standard. One scale. A funded plan for every team.</h1>
+    <p class="lede">This briefing summarises the org-wide framework for setting a test quality standard, assessing any team's AS-IS state with evidence (not opinion), grading maturity on a scale leadership can act on, and turning every gap into an owned improvement plan — covering process, automation, tooling, and AI adoption.</p>
+    <div class="status-row">
+      <span class="status-pill">Assessment cycle: <b>Cycle 1 not yet run</b></span>
+      <span class="status-pill">Cadence: <b>Quarterly</b></span>
+      <span class="status-pill">Owner: <b>Test COE</b></span>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><div class="n">32</div><div class="l">program documents across policy, assessment, roadmap &amp; reporting</div></div>
+      <div class="stat"><div class="n">17</div><div class="l">testing types &amp; levels standardised, from unit to chaos engineering</div></div>
+      <div class="stat"><div class="n">5</div><div class="l">maturity levels, scored independently across 5 weighted dimensions</div></div>
+      <div class="stat"><div class="n">7</div><div class="l">non-negotiable controls that cap a grade regardless of average score</div></div>
+    </div>
+  </div>
+
+  <section id="ladder">
+    <div class="section-head">
+      <div>
+        <span class="kicker">The maturity model</span>
+        <h2 class="h">Five levels, from reactive to self-optimizing</h2>
+        <p class="section-desc">Every team lands on this ladder independently for each of five dimensions — a team can be Defined on process while still Ad Hoc on AI adoption.</p>
+      </div>
+      <p class="colcap">Full rubric: 03-Maturity-Model/Dimension-Rubrics.md</p>
+    </div>
+
+    <div class="ladder">
+      <div class="rung" style="background:var(--level-1)"><span class="lv">L1</span><span class="name">Ad Hoc / Reactive</span></div>
+      <div class="rung" style="background:var(--level-2)"><span class="lv">L2</span><span class="name">Emerging / Repeatable</span></div>
+      <div class="rung" style="background:var(--level-3)"><span class="lv">L3</span><span class="name">Defined / Standardized</span></div>
+      <div class="rung" style="background:var(--level-4)"><span class="lv">L4</span><span class="name">Managed / Measured</span></div>
+      <div class="rung" style="background:var(--level-5)"><span class="lv">L5</span><span class="name">Optimizing / Leading-edge</span></div>
+    </div>
+    <div class="ladder-detail">
+      <div class="cell">Undocumented, person-dependent. Automation, if any, is fragile and untrusted.</div>
+      <div class="cell">Process exists but inconsistently followed. Manual, unmeasured. Heroics save releases.</div>
+      <div class="cell">Standardised, consistently followed. Dashboards exist. Minimum acceptable steady state for Tier 1/2 teams.</div>
+      <div class="cell">Metrics actively drive release and investment decisions. Automation gates CI/CD. AI used in governed, bounded ways.</div>
+      <div class="cell">Source of org best practice. Predictive/AI-driven testing. Metrics used to prevent problems, not just find them.</div>
+    </div>
+  </section>
+
+  <section id="grades">
+    <div class="section-head">
+      <div>
+        <span class="kicker">Grading for leadership</span>
+        <h2 class="h">Every team rolls up to one letter grade</h2>
+        <p class="section-desc">Composite of the five dimension scores — but capped whenever a critical gap exists, so an average can never quietly hide real risk.</p>
+      </div>
+    </div>
+    <div class="grades">
+      <div class="grade-card">
+        <div class="grade-top">
+          <div class="grade-chip" style="background:var(--grade-a)">A</div>
+          <div><div class="tag" style="color:var(--grade-a)">Level 4–5</div><h4>Model team</h4></div>
+        </div>
+        <p>Low release risk. Candidate to host org best practice and mentor other teams.</p>
+        <div class="posture">Posture: fund innovation &amp; enablement role</div>
+      </div>
+      <div class="grade-card">
+        <div class="grade-top">
+          <div class="grade-chip" style="background:var(--grade-b)">B</div>
+          <div><div class="tag" style="color:var(--grade-b)">Level 3</div><h4>Meets the floor</h4></div>
+        </div>
+        <p>Acceptable steady state — meets the policy minimum, not yet a differentiator.</p>
+        <div class="posture">Posture: fund targeted advancement</div>
+      </div>
+      <div class="grade-card">
+        <div class="grade-top">
+          <div class="grade-chip" style="background:var(--grade-c)">C</div>
+          <div><div class="tag" style="color:var(--grade-c)">Level 2, or gated</div><h4>Below the floor</h4></div>
+        </div>
+        <p>Real release/quality risk. Includes any team gated down by a critical gap.</p>
+        <div class="posture">Posture: funded plan, executive visibility</div>
+      </div>
+      <div class="grade-card">
+        <div class="grade-top">
+          <div class="grade-chip" style="background:var(--grade-d)">D</div>
+          <div><div class="tag" style="color:var(--grade-d)">Level 1</div><h4>Foundational gaps</h4></div>
+        </div>
+        <p>High risk. Needs COE-embedded support, not a self-service plan on paper.</p>
+        <div class="posture">Posture: immediate intervention</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="weighting">
+    <div class="section-head">
+      <div>
+        <span class="kicker">How the grade is built</span>
+        <h2 class="h">Five weighted dimensions, evidence-gated</h2>
+        <p class="section-desc">Scores require a linked artefact — a dashboard, repo, or pipeline — not a claim. No evidence caps the score regardless of narrative.</p>
+      </div>
+      <p class="colcap">Detail: 02-Assessment-Questionnaire/Scoring-and-Weighting-Guide.md</p>
+    </div>
+
+    <div class="weightbar">
+      <div class="seg" style="width:35%;background:var(--series-process)">Process 35%</div>
+      <div class="seg" style="width:20%;background:var(--series-coverage)">Coverage 20%</div>
+      <div class="seg" style="width:25%;background:var(--series-automation)">Automation &amp; Tooling 25%</div>
+      <div class="seg" style="width:10%;background:var(--series-ai)">AI 10%</div>
+      <div class="seg" style="width:10%;background:var(--series-competency)">Culture 10%</div>
+    </div>
+    <div class="legend">
+      <div class="legend-item"><span class="swatch" style="background:var(--series-process)"></span><div><div class="t">Process</div><div class="d">Planning, design, execution, defects, environments</div></div></div>
+      <div class="legend-item"><span class="swatch" style="background:var(--series-coverage)"></span><div><div class="t">Coverage</div><div class="d">Depth across all applicable testing types &amp; levels</div></div></div>
+      <div class="legend-item"><span class="swatch" style="background:var(--series-automation)"></span><div><div class="t">Automation &amp; Tooling</div><div class="d">Capability <em>and</em> capacity, cross-checked against the automation deep-dive</div></div></div>
+      <div class="legend-item"><span class="swatch" style="background:var(--series-ai)"></span><div><div class="t">AI Adoption</div><div class="d">Use-case breadth, gated by governance compliance</div></div></div>
+      <div class="legend-item"><span class="swatch" style="background:var(--series-competency)"></span><div><div class="t">Competency, Governance &amp; Culture</div><div class="d">Skills, career path, whole-team ownership</div></div></div>
+    </div>
+
+    <div class="gate-note">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="margin-top:1px"><path d="M12 2 1 21h22L12 2Z" stroke="var(--grade-d)" stroke-width="2" stroke-linejoin="round"/><path d="M12 9v5" stroke="var(--grade-d)" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="17" r="1" fill="var(--grade-d)"/></svg>
+      <div>
+        <div class="t">Weakest-link gating overrides the average</div>
+        <div class="d">A violated non-negotiable, a security/critical-coverage score of 0–1 on a Tier 1/2 team, or one dimension sitting at L1 while others sit at L4+ all cap the overall grade at Grade C — regardless of the composite number.</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="coverage">
+    <div class="section-head">
+      <div>
+        <span class="kicker">Beyond process, automation &amp; AI</span>
+        <h2 class="h">The 360° view — what else this covers</h2>
+        <p class="section-desc">A maturity model that only scores the three headline areas gives a false sense of completeness. These are scored as first-class dimensions too.</p>
+      </div>
+    </div>
+    <div class="grid360">
+      <div class="quad">
+        <h4>Engineering &amp; Environments</h4>
+        <ul>
+          <li>Test environment provisioning &amp; parity</li>
+          <li>Test data masking &amp; synthetic generation</li>
+          <li>Contract &amp; chaos/resilience testing</li>
+          <li>Non-functional gates: performance, security, a11y</li>
+        </ul>
+      </div>
+      <div class="quad">
+        <h4>Quality Feedback Loops</h4>
+        <ul>
+          <li>Defect root-cause &amp; escape analysis</li>
+          <li>Requirements-to-test traceability</li>
+          <li>Release retrospectives, not just sign-off</li>
+          <li>KPI trend reporting, not point-in-time snapshots</li>
+        </ul>
+      </div>
+      <div class="quad">
+        <h4>People &amp; Culture</h4>
+        <ul>
+          <li>Skills matrix &amp; individual development plans</li>
+          <li>SDET/QE career pathing</li>
+          <li>Whole-team quality ownership, not a QA silo</li>
+          <li>Psychological safety to delay a release</li>
+        </ul>
+      </div>
+      <div class="quad">
+        <h4>Governance &amp; Risk</h4>
+        <ul>
+          <li>Tooling &amp; license cost governance</li>
+          <li>AI data-classification &amp; approval board</li>
+          <li>Risk-tiering, not one-size-fits-all standards</li>
+          <li>Exception tracking visible to leadership</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="snapshot">
+    <div class="section-head">
+      <div>
+        <span class="kicker">Portfolio view</span>
+        <h2 class="h">What the org roll-up looks like once Cycle 1 runs</h2>
+        <p class="section-desc">No team has been assessed under this model yet. The distribution below is illustrative, shaped by typical first-cycle results, to show leadership what the reporting will look like — not a claim about actual current standing.</p>
+      </div>
+    </div>
+    <span class="sample-badge">Illustrative example · not real data</span>
+
+    <div class="snapshot">
+      <div class="distbar">
+        <div class="distrow"><span class="lbl">Grade A</span><div class="track"><div class="fill" style="width:10%;background:var(--grade-a)"></div></div><span class="val">2 teams</span></div>
+        <div class="distrow"><span class="lbl">Grade B</span><div class="track"><div class="fill" style="width:35%;background:var(--grade-b)"></div></div><span class="val">7 teams</span></div>
+        <div class="distrow"><span class="lbl">Grade C</span><div class="track"><div class="fill" style="width:40%;background:var(--grade-c)"></div></div><span class="val">8 teams</span></div>
+        <div class="distrow"><span class="lbl">Grade D</span><div class="track"><div class="fill" style="width:15%;background:var(--grade-d)"></div></div><span class="val">3 teams</span></div>
+      </div>
+      <div>
+        <p class="snapshot-note">A first cycle typically skews toward B/C — that's the expected starting point, not a failure of the program. The roadmap phases (below) are sequenced around exactly this shape: stabilise Grade D first, standardise Grade C, then scale Grade B into automation and AI advancement. Once Cycle 1 runs, this section is replaced with the live org roll-up from the <a href="https://claude.ai/code/artifact/07e9a0d7-d96d-4f5b-8eab-b806bf82f67c">Maturity Scoring Console</a> — not rebuilt by hand.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="roadmap">
+    <div class="section-head">
+      <div>
+        <span class="kicker">Phased rollout</span>
+        <h2 class="h">Four phases across the first year</h2>
+        <p class="section-desc">Sequenced so foundational risk is closed before advanced capability is built on top of it.</p>
+      </div>
+      <p class="colcap">Detail: 06-Improvement-Planning/Org-Wide-Roadmap-Template.md</p>
+    </div>
+    <div class="roadmap">
+      <div class="phase">
+        <div class="phase-marker">1</div>
+        <div class="phase-when">This quarter</div>
+        <h4>Stabilize</h4>
+        <p>COE-embedded support for every Grade D team; close any open non-negotiable violation org-wide.</p>
+      </div>
+      <div class="phase">
+        <div class="phase-marker">2</div>
+        <div class="phase-when">Next quarter</div>
+        <h4>Standardize</h4>
+        <p>Move "process gap" Grade C teams to B; begin shared automation framework consolidation.</p>
+      </div>
+      <div class="phase">
+        <div class="phase-marker">3</div>
+        <div class="phase-when">2 quarters out</div>
+        <h4>Scale Automation</h4>
+        <p>Grade B teams advance CI gating, parallelisation, SDET capacity; AI governance board stood up.</p>
+      </div>
+      <div class="phase">
+        <div class="phase-marker">4</div>
+        <div class="phase-when">3–4 quarters out</div>
+        <h4>Optimize &amp; Lead</h4>
+        <p>Grade A teams pilot AI-augmented, self-healing automation; best practice folded back into policy.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="ask">
+    <div class="section-head">
+      <div>
+        <span class="kicker">Decisions needed</span>
+        <h2 class="h">The ask of leadership</h2>
+        <p class="section-desc">The framework is complete and ready to run. These four decisions unblock Cycle 1.</p>
+      </div>
+    </div>
+    <div class="asks">
+      <div class="ask"><div class="num">01</div><div><h4>Approve the policy</h4><p>Adopt the Org Test Policy and risk-tiering as the organisation's standard.</p></div></div>
+      <div class="ask"><div class="num">02</div><div><h4>Sponsor Cycle 1</h4><p>~2–3 hours per team lead, plus Test COE assessor time, across all teams this quarter.</p></div></div>
+      <div class="ask"><div class="num">03</div><div><h4>Stand up AI governance</h4><p>COE + Security + Legal board, needed before AI-adoption scoring can safely begin.</p></div></div>
+      <div class="ask"><div class="num">04</div><div><h4>Calendar the quarterly review</h4><p>First org-wide grade distribution and roadmap presented at the next maturity review.</p></div></div>
+    </div>
+  </section>
+
+  <footer>
+    <span class="kicker">Full framework</span>
+    <h2 class="h" style="font-size:19px;">Every document behind this briefing</h2>
+    <div class="docindex">
+      <div class="doc"><div class="p">01</div><div class="n">Policy &amp; Standards</div></div>
+      <div class="doc"><div class="p">02</div><div class="n">Assessment Questionnaire</div></div>
+      <div class="doc"><div class="p">03</div><div class="n">Maturity Model</div></div>
+      <div class="doc"><div class="p">04</div><div class="n">Automation Maturity</div></div>
+      <div class="doc"><div class="p">05</div><div class="n">AI in Testing</div></div>
+      <div class="doc"><div class="p">06</div><div class="n">Improvement Planning</div></div>
+      <div class="doc"><div class="p">07</div><div class="n">Leadership Summary</div></div>
+      <div class="doc"><div class="p">08</div><div class="n">Agile &amp; Scrum Practices</div></div>
+      <div class="doc"><div class="p">00</div><div class="n">Program Overview</div></div>
+    </div>
+    <p class="fineprint">Prepared by the Test Center of Excellence. This is a living framework, re-run quarterly — figures in the portfolio-view section are illustrative until Cycle 1 completes. See 07-Leadership-Summary/Executive-Summary.md for the full narrative.</p>
+  </footer>
+</div>
